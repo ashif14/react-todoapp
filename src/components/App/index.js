@@ -124,19 +124,22 @@ class App extends Component {
   handleNewTaskSubmit(e) {
     e.preventDefault();
     const task_name = e.target.task_name.value;
-    console.log(task_name);
+    // console.log(task_name);
 
     fetch('http://localhost:3000/tasks/createTask', {
       method: 'POST',
-      mode: 'CORS',
+      //mode: 'CORS',
       body: JSON.stringify({
         "name": e.target.task_name.value,
       }),
+      headers : {
+        'Content-type': 'application/json'
+      },
     }).then((response) => response.json())
-      .then((jsonResponse) => console.log(jsonResponse))
+      .then(() => this.reloadTasks())
       .catch((error) => console.error(error));
 
-    // this.reloadTasks();
+    
 
     e.target.task_name.value = "";
   }
